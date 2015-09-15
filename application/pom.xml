@@ -5,6 +5,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>application</name>
 	<description>Coeur applicatif de l'IA</description>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>model</module>
+		<module>tools</module>
+	</modules>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -85,5 +92,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<packaging>pom</packaging>
 </project>

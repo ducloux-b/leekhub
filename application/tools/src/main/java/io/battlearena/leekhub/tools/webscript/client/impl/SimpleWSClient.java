@@ -15,6 +15,8 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.battlearena.leekhub.model.exception.webscript.WebScriptException;
 import io.battlearena.leekhub.model.web.HTTPVerb;
@@ -24,46 +26,50 @@ import io.battlearena.leekhub.tools.json.JsonSingleton;
 import io.battlearena.leekhub.tools.webscript.client.IWSClient;
 
 /**
- * @author leperrin
+ * 
+ * @author Léo
  *
+ * @param <Q> Query class
+ * @param <R> Response class
  */
-public class SimpleWSClient implements IWSClient {
-	
+public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
+
 	private static final int TIMEOUT = 60;
 	private static final String CHARSET = "UTF-8";
+	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleWSClient.class);
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#get(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse get(final URL address, final IWSQuery query) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.GET);
+	public IWSResponse<R> get(final URL address, final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(address, query, HTTPVerb.GET, responseClassName);
 	}
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#post(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse post(final URL address, final IWSQuery query) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.POST);
+	public IWSResponse<R> post(final URL address, final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(address, query, HTTPVerb.POST, responseClassName);
 	}
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#delete(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse delete(final URL address, final IWSQuery query) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.DELETE);
+	public IWSResponse<R> delete(final URL address, final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(address, query, HTTPVerb.DELETE, responseClassName);
 	}
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#put(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse put(final URL address, final IWSQuery query) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.PUT);
+	public IWSResponse<R> put(final URL address, final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(address, query, HTTPVerb.PUT, responseClassName);
 	}
-	
+
 	/**
 	 * Initialiser une connexion avec un web service
 	 * @param address l'adresse du webservice
@@ -74,7 +80,7 @@ public class SimpleWSClient implements IWSClient {
 	protected HttpURLConnection openConnexion(final URL address, final HTTPVerb verb) throws IOException {
 		return openConnexion(address, verb, null, null);
 	}
-	
+
 	/**
 	 * Initialiser une connexion avec un web service
 	 * @param address l'adresse du webservice
@@ -104,7 +110,7 @@ public class SimpleWSClient implements IWSClient {
 		}
 		return connexion;
 	}
-	
+
 	/**
 	 * Cloturer une connexion avec un web service
 	 * @param connexion la connexion à cloturer
@@ -112,7 +118,7 @@ public class SimpleWSClient implements IWSClient {
 	protected void closeConnexion(HttpURLConnection connexion) {
 		connexion.disconnect();
 	}
-	
+
 	/**
 	 * Conversion d'un InputStream en String
 	 * @param inputStream flux de text
@@ -138,7 +144,7 @@ public class SimpleWSClient implements IWSClient {
 		}
 		return output.toString();
 	}
-	
+
 	/**
 	 * Methode qui effectue l'appel HTTP
 	 * @param address l'adresse à interoger
@@ -147,19 +153,35 @@ public class SimpleWSClient implements IWSClient {
 	 * @return Une reponse respectant l'interface IWSResponse
 	 * @throws WebScriptException Les erreurs remontant de plus bas encapsulé et commenté
 	 */
-	protected IWSResponse anyVerb(final URL address, final IWSQuery query, HTTPVerb verb) throws WebScriptException {
+	@SuppressWarnings("unchecked")
+	protected IWSResponse<R> anyVerb(final URL address, final Q query, HTTPVerb verb, String responseClassName) throws WebScriptException {
 		HttpURLConnection connexion = null;
-		IWSResponse response = null;
+		IWSResponse<R> response = null;
 		try {
+			response = (IWSResponse<R>) Class.forName(responseClassName).newInstance();
+
 			connexion = openConnexion(address, verb);
-			connexion.setDoOutput(true);
-			connexion.setRequestProperty("Content-Type", "application/json");
-			final OutputStream webscriptStream = connexion.getOutputStream();
 			final String input = JsonSingleton.INSTANCE.jsonise(query);
-			webscriptStream.write(input.getBytes(CHARSET));
-			webscriptStream.flush();
-			response = JsonSingleton.INSTANCE.dejsonise(inputStreamToString(connexion.getInputStream()), IWSResponse.class);     
+			if ("{}".equals(input) || "[]".equals(input)) {
+				// do nothing
+			} else {
+				final OutputStream webscriptStream = connexion.getOutputStream();
+				connexion.setDoOutput(true);
+				connexion.setRequestProperty("Content-Type", "application/json");
+				System.err.println(input);
+				webscriptStream.write(input.getBytes(CHARSET));
+				webscriptStream.flush();
+			}
+			System.out.println(connexion.getResponseCode());
+
+			response.setResponseValue((R) JsonSingleton.INSTANCE.dejsonise(inputStreamToString(connexion.getInputStream()), response.getResponseType()));     
 			response.setCode(connexion.getResponseCode());
+		} catch (InstantiationException e) {
+			LOGGER.error("La classe {} est une classe abstraite ou n'as pas de constructeur par defaut",responseClassName,e);
+		} catch (IllegalAccessException e) {
+			LOGGER.error("La constructeur de la classe {} est un constructeur privé",responseClassName,e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("La class {} n'existe pas",responseClassName,e);
 		} catch (IOException e) {
 			throw new WebScriptException("Impossible de se connecter au webscript: " + address.toString(), e);
 		} finally {

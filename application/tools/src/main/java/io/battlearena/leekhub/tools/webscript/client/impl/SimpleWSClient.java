@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.Base64.Encoder;
@@ -160,26 +161,23 @@ public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
 		IWSResponse<R> response = null;
 		try {
 			response = (IWSResponse<R>) Class.forName(responseClassName).newInstance();
-			
+
 			URL address = new URL(rootAdress  + "/" + query.getRessource());
 
 			connexion = openConnexion(address, verb);
-			
-			final String input = JsonSingleton.INSTANCE.jsonise(query);
-			if ("{}".equals(input) || "[]".equals(input)) {
-				// do nothing
-			} else {
+
+			if (query.getContentParams() != null) {
 				final OutputStream webscriptStream = connexion.getOutputStream();
 				connexion.setDoOutput(true);
 				connexion.setRequestProperty("Content-Type", "application/json");
-				System.err.println(input);
-				webscriptStream.write(input.getBytes(CHARSET));
+				System.err.println(query.getContentParams().getJsonizedContent());
+				webscriptStream.write(query.getContentParams().getJsonizedContent().getBytes(CHARSET));
 				webscriptStream.flush();
 			}
-			System.out.println(connexion.getResponseCode());
-
 			response.setResponseValue((R) JsonSingleton.INSTANCE.dejsonise(inputStreamToString(connexion.getInputStream()), response.getResponseType()));     
 			response.setCode(connexion.getResponseCode());
+		} catch (MalformedURLException e) {
+			LOGGER.error("L'adresse {} n'est pas conforme ", rootAdress  + "/" + query.getRessource(),e);
 		} catch (InstantiationException e) {
 			LOGGER.error("La classe {} est une classe abstraite ou n'as pas de constructeur par defaut",responseClassName,e);
 		} catch (IllegalAccessException e) {

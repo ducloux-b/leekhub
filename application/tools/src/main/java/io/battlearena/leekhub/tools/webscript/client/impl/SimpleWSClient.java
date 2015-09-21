@@ -37,37 +37,38 @@ public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
 	private static final int TIMEOUT = 60;
 	private static final String CHARSET = "UTF-8";
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleWSClient.class);
+	private String rootAdress = "http://battlearena.io/test-ws";
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#get(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse<R> get(final URL address, final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.GET, responseClassName);
+	public IWSResponse<R> get(final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(query, HTTPVerb.GET, responseClassName);
 	}
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#post(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse<R> post(final URL address, final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.POST, responseClassName);
+	public IWSResponse<R> post(final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(query, HTTPVerb.POST, responseClassName);
 	}
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#delete(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse<R> delete(final URL address, final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.DELETE, responseClassName);
+	public IWSResponse<R> delete(final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(query, HTTPVerb.DELETE, responseClassName);
 	}
 
 	/**
 	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#put(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
 	 */
 	@Override
-	public IWSResponse<R> put(final URL address, final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(address, query, HTTPVerb.PUT, responseClassName);
+	public IWSResponse<R> put(final Q query, String responseClassName) throws WebScriptException {
+		return anyVerb(query, HTTPVerb.PUT, responseClassName);
 	}
 
 	/**
@@ -154,13 +155,16 @@ public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
 	 * @throws WebScriptException Les erreurs remontant de plus bas encapsulé et commenté
 	 */
 	@SuppressWarnings("unchecked")
-	protected IWSResponse<R> anyVerb(final URL address, final Q query, HTTPVerb verb, String responseClassName) throws WebScriptException {
+	protected IWSResponse<R> anyVerb(final Q query, HTTPVerb verb, String responseClassName) throws WebScriptException {
 		HttpURLConnection connexion = null;
 		IWSResponse<R> response = null;
 		try {
 			response = (IWSResponse<R>) Class.forName(responseClassName).newInstance();
+			
+			URL address = new URL(rootAdress  + "/" + query.getRessource());
 
 			connexion = openConnexion(address, verb);
+			
 			final String input = JsonSingleton.INSTANCE.jsonise(query);
 			if ("{}".equals(input) || "[]".equals(input)) {
 				// do nothing
@@ -183,7 +187,7 @@ public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
 		} catch (ClassNotFoundException e) {
 			LOGGER.error("La class {} n'existe pas",responseClassName,e);
 		} catch (IOException e) {
-			throw new WebScriptException("Impossible de se connecter au webscript: " + address.toString(), e);
+			throw new WebScriptException("Impossible de se connecter au webscript: " + rootAdress  + "/" + query.getRessource(), e);
 		} finally {
 			if (null != connexion) {
 				closeConnexion(connexion);

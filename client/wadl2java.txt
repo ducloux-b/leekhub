@@ -1,0 +1,1 @@
+wadl2java -p io.battlearena.client -noVoidForEmptyResponses -d src/main/java src/main/wadl/application.wadl

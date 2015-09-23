@@ -33,44 +33,13 @@ import io.battlearena.leekhub.tools.webscript.client.IWSClient;
  * @param <Q> Query class
  * @param <R> Response class
  */
-public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
+public class SimpleWSClient<Q extends IWSQuery<?, ? extends IWSResponse<R>>,R> implements IWSClient<Q, R> {
 
-	private static final int TIMEOUT = 60;
+	private static final int TIMEOUT = 6000;
 	private static final String CHARSET = "UTF-8";
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleWSClient.class);
 	private String rootAdress = "http://battlearena.io/test-ws";
 
-	/**
-	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#get(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
-	 */
-	@Override
-	public IWSResponse<R> get(final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(query, HTTPVerb.GET, responseClassName);
-	}
-
-	/**
-	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#post(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
-	 */
-	@Override
-	public IWSResponse<R> post(final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(query, HTTPVerb.POST, responseClassName);
-	}
-
-	/**
-	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#delete(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
-	 */
-	@Override
-	public IWSResponse<R> delete(final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(query, HTTPVerb.DELETE, responseClassName);
-	}
-
-	/**
-	 * @see io.battlearena.leekhub.tools.webscript.client.IWSClient#put(java.net.URL, io.battlearena.leekhub.model.webscript.query.IWSQuery)
-	 */
-	@Override
-	public IWSResponse<R> put(final Q query, String responseClassName) throws WebScriptException {
-		return anyVerb(query, HTTPVerb.PUT, responseClassName);
-	}
 
 	/**
 	 * Initialiser une connexion avec un web service
@@ -155,16 +124,19 @@ public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
 	 * @return Une reponse respectant l'interface IWSResponse
 	 * @throws WebScriptException Les erreurs remontant de plus bas encapsulé et commenté
 	 */
-	@SuppressWarnings("unchecked")
-	protected IWSResponse<R> anyVerb(final Q query, HTTPVerb verb, String responseClassName) throws WebScriptException {
+	@Override
+	public IWSResponse<R> call(final Q query) throws WebScriptException {
+		System.setProperty("http.proxyHost", "ntes.proxy.corp.sopra");
+        System.setProperty("http.proxyPort", "8080");
+        //System.setProperty("https.proxyHost", "ntes.proxy.corp.sopra");
+        //System.setProperty("https.proxyPort", "8080");
 		HttpURLConnection connexion = null;
-		IWSResponse<R> response = null;
+		IWSResponse<R> response = query.getResponse();
 		try {
-			response = (IWSResponse<R>) Class.forName(responseClassName).newInstance();
 
 			URL address = new URL(rootAdress  + "/" + query.getRessource());
 
-			connexion = openConnexion(address, verb);
+			connexion = openConnexion(address, query.getVerb());
 
 			if (query.getContentParams() != null) {
 				final OutputStream webscriptStream = connexion.getOutputStream();
@@ -178,12 +150,6 @@ public class SimpleWSClient<Q extends IWSQuery,R> implements IWSClient<Q, R> {
 			response.setCode(connexion.getResponseCode());
 		} catch (MalformedURLException e) {
 			LOGGER.error("L'adresse {} n'est pas conforme ", rootAdress  + "/" + query.getRessource(),e);
-		} catch (InstantiationException e) {
-			LOGGER.error("La classe {} est une classe abstraite ou n'as pas de constructeur par defaut",responseClassName,e);
-		} catch (IllegalAccessException e) {
-			LOGGER.error("La constructeur de la classe {} est un constructeur privé",responseClassName,e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.error("La class {} n'existe pas",responseClassName,e);
 		} catch (IOException e) {
 			throw new WebScriptException("Impossible de se connecter au webscript: " + rootAdress  + "/" + query.getRessource(), e);
 		} finally {

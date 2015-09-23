@@ -1,18 +1,12 @@
 package io.battlearena.leekhub.model.webscript.query.impl;
 
-import io.battlearena.leekhub.model.webscript.query.ContentQuery;
+import io.battlearena.leekhub.model.web.HTTPVerb;
 import io.battlearena.leekhub.model.webscript.query.IWSQuery;
+import io.battlearena.leekhub.model.webscript.response.impl.Pong;
 
-public class Ping implements IWSQuery {
+public class Ping extends IWSQuery<String, Pong> {
 
-
-	@Override
-	public ContentQuery getContentParams() {
-		return null;
-	}
-
-	@Override
-	public String getRessource() {
-		return "ping";
+	public Ping() {
+		super(new Pong(), "ping", null, HTTPVerb.GET);
 	}
 }

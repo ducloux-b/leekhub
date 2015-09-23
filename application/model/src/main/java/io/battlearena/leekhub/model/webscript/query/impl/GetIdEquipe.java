@@ -1,28 +1,12 @@
 package io.battlearena.leekhub.model.webscript.query.impl;
 
-import io.battlearena.leekhub.model.webscript.query.ContentQuery;
+import io.battlearena.leekhub.model.web.HTTPVerb;
 import io.battlearena.leekhub.model.webscript.query.IWSQuery;
+import io.battlearena.leekhub.model.webscript.response.impl.IdEquipe;
 
-public class GetIdEquipe implements IWSQuery {
-	private String teamName;
-	private String teamPassword;
-	
-	
-	
+public class GetIdEquipe extends IWSQuery<String, IdEquipe> {
+
 	public GetIdEquipe(String teamName, String teamPassword) {
-		super();
-		this.teamName = teamName;
-		this.teamPassword = teamPassword;
+		super(new IdEquipe(), "player/getIdEquipe/"+teamName+"/"+teamPassword, null, HTTPVerb.GET);
 	}
-	
-	@Override
-	public String getRessource() {
-		return "player/getIdEquipe/"+teamName+"/"+teamPassword;
-	}
-	@Override
-	public ContentQuery getContentParams() {
-		return null;
-	}
-	
-	
 }

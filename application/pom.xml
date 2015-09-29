@@ -16,6 +16,7 @@
 	</modules>
 	
 	<build>
+		<directory>${basedir}/target/</directory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -81,6 +82,11 @@
 			<artifactId>gson</artifactId>
 			<version>${gsonVersion}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-core</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 		<!--  Scope Test  -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -93,11 +99,6 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockitoVersion}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jgrapht</groupId>
-			<artifactId>jgrapht-core</artifactId>
-			<version>0.9.1</version>
 		</dependency>
 	</dependencies>
 </project>

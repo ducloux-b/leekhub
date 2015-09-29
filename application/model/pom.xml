@@ -5,6 +5,7 @@
 	<name>model</name>
 	<description>model definition for leekhub application</description>
 	
+  <packaging>jar</packaging>
 	<parent>
 		<groupId>io.battlearena.leekhub</groupId>
 		<artifactId>application</artifactId>

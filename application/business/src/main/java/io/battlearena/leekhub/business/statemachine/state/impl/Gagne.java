@@ -2,9 +2,9 @@ package io.battlearena.leekhub.business.statemachine.state.impl;
 
 import io.battlearena.leekhub.business.statemachine.state.State;
 
-public class Perdu extends State {
+public class Gagne extends State {
 
-	public Perdu() {
+	public Gagne() {
 		// TODO Auto-generated constructor stub
 	}
 

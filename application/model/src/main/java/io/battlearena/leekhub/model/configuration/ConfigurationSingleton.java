@@ -11,6 +11,8 @@ public enum ConfigurationSingleton {
 	public final static String BATTLE = "battle"; 
 	/** Mode de jeu */
 	private String mode = TRAINING;
+	/** ID de la partie */
+	private String idPartie;
 
 	public final String getIdEquipe() {
 		return idEquipe;
@@ -26,6 +28,14 @@ public enum ConfigurationSingleton {
 
 	public final void setMode(String mode) {
 		this.mode = mode;
+	}
+
+	public String getIdPartie() {
+		return idPartie;
+	}
+
+	public void setIdPartie(String idPartie) {
+		this.idPartie = idPartie;
 	}
 	
 	

@@ -2,17 +2,19 @@ package io.battlearena.leekhub.business.statemachine.state.impl;
 
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
+import io.battlearena.leekhub.service.GetBoardService;
 
 public class GetBoard extends State {
+	
+	private GetBoardService getBoardService;
 
 	public GetBoard() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public StatesMachine run() {
-		// TODO Auto-generated method stub
-		return null;
+		getBoardService.getPlay();
+		return StatesMachine.PLAY;
 	}
 
 }

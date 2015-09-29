@@ -9,11 +9,9 @@ import javax.annotation.Generated;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Configurable;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
@@ -24,8 +22,6 @@ import org.glassfish.jersey.uri.UriTemplate;
     "wadl|file:/D:/Profiles/tHingant/Workspaces/Battle%20Code/application.wadl"
 }, comments = "wadl2java, http://wadl.java.net", date = "2015-09-23T18:14:38.526+02:00")
 public class BattlearenaIo_TestWs {
-	
-	private static ResourceBundle RES = ResourceBundle.getBundle("proxy");
 	
     /**
      * The base URI for the resource represented by this proxy
@@ -76,8 +72,6 @@ public class BattlearenaIo_TestWs {
     	System.setProperty("http.proxyHost", "ntes.proxy.corp.sopra");
         System.setProperty("http.proxyPort", "8080");
     	cc.property(ClientProperties.PROXY_URI, "ntes.proxy.corp.sopra:8080");
-		cc.property(ClientProperties.PROXY_USERNAME, RES.getString("username"));
-		cc.property(ClientProperties.PROXY_PASSWORD, RES.getString("password"));
     }
 
     /**

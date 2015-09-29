@@ -12,6 +12,7 @@
 		<module>tools</module>
 		<module>business</module>
 		<module>service</module>
+		<module>client</module>
 	</modules>
 	
 	<build>

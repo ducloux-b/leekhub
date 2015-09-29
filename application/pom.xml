@@ -2,25 +2,26 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.battlearena.leekhub</groupId>
 	<artifactId>application</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>application</name>
 	<description>Coeur applicatif de l'IA</description>
 	<packaging>pom</packaging>
 	
 	<modules>
+		<module>client</module>
 		<module>model</module>
 		<module>tools</module>
 		<module>business</module>
 		<module>service</module>
-		<module>client</module>
 	</modules>
 	
 	<build>
+		<directory>${basedir}/target/</directory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.3</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -58,7 +59,8 @@
 		<mockitoVersion>1.10.19</mockitoVersion>
 		<gsonVersion>2.3.1</gsonVersion>
 		<javaxValidationVersion>1.0.0.GA</javaxValidationVersion>
-		<leekToolsVersion>0.0.1-SNAPSHOT</leekToolsVersion>
+		<leekHubVersion>1.0.0</leekHubVersion>
+		<leekToolsVersion>1.0.0</leekToolsVersion>
 	</properties>
 	<dependencies>
 		<dependency>

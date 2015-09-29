@@ -11,37 +11,37 @@ import io.battlearena.leekhub.business.statemachine.state.impl.Play;
 
 public enum StatesMachine {
 	GET_ID_EQUIPE { 
-		public State process() {
+		public StatesMachine process() {
 			return this.getGetIdEquipe().run();
 		}
 	},
 	NEW_GAME {
-		State process() {
+		public StatesMachine process() {
 			return this.getNewGame().run();
 		}
 	},
 	NEXT_GAME {
-		State process() {
+		public StatesMachine process() {
 			return this.getNextGame().run();
 		}
 	},
 	GET_STATUS {
-		State process() {
+		public StatesMachine process() {
 			return this.getGetStatus().run();
 		}
 	},
 	GET_BOARD {
-		State process() {
+		public StatesMachine process() {
 			return this.getGetBoard().run();
 		}
 	},
 	PLAY {
-		State process() {
+		public StatesMachine process() {
 			return this.getPlay().run();
 		}
 	},
 	LOOSE {
-		State process() {
+		public StatesMachine process() {
 			// FIN DE JEU
 			return null;
 		}
@@ -49,7 +49,7 @@ public enum StatesMachine {
 	
 	
 	
-	abstract State process();
+	public abstract StatesMachine process();
 	
 	private static String idEquipe;
 	private static String idPartie;

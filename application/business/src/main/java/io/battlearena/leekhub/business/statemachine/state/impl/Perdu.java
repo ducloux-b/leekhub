@@ -1,5 +1,6 @@
 package io.battlearena.leekhub.business.statemachine.state.impl;
 
+import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 
 public class Perdu extends State {
@@ -9,7 +10,7 @@ public class Perdu extends State {
 	}
 
 	@Override
-	public State run() {
+	public StatesMachine run() {
 		// TODO Auto-generated method stub
 		return null;
 	}

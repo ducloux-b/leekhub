@@ -1,16 +1,12 @@
 package io.battlearena.leekhub.business.runner;
 
-import io.battlearena.leekhub.business.statemachine.state.State;
-import io.battlearena.leekhub.business.statemachine.state.impl.GetIdEquipe;
+import io.battlearena.leekhub.business.statemachine.StatesMachine;
 
 public class Run {
-	
-	private static final State START_SATE = new GetIdEquipe();
-
 	public static void main(String[] args) {
-		State currentState = START_SATE;
+		StatesMachine currentState = StatesMachine.GET_ID_EQUIPE;
 		while(null != currentState) {
-			currentState = currentState.run();
+			currentState = currentState.process();
 		}
 	}
 }

@@ -80,12 +80,8 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>model</artifactId>
-<<<<<<< HEAD
-			<version>${leekHubVersion}</version>
-=======
 			<version>${project.version}</version>
 			<scope>provided</scope>
->>>>>>> 4f436f83815c4b55acad28bccfcc3fa5a28e7014
 		</dependency>
 		<!--  Scope Test  -->
 		<dependency>

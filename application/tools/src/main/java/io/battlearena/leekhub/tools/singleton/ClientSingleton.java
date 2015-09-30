@@ -1,8 +1,8 @@
 package io.battlearena.leekhub.tools.singleton;
 
-import javax.ws.rs.client.Client;
+import com.sun.jersey.api.client.Client;
 
-import io.battlearena.leekhub.tools.client.BattlearenaIo_TestWs;
+import io.battlearena.leekhub.tools.client.IP521913975_BattleWs;
 
 public class ClientSingleton {
 	
@@ -16,7 +16,7 @@ public class ClientSingleton {
 			{
 				if (INSTANCE == null)
 				{
-					INSTANCE = BattlearenaIo_TestWs.createClient();
+					INSTANCE = IP521913975_BattleWs.createClient();
 				}
 			}
 		}

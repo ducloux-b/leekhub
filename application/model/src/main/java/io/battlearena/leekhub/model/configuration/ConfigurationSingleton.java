@@ -16,7 +16,7 @@ public enum ConfigurationSingleton {
 	/** user */
 	private String user = "LeekHub";
 	/** mdp */
-	private String password = "LH56FTjlj";
+	private String password = "LH56FTljlj";
 
 	public final String getIdEquipe() {
 		return idEquipe;

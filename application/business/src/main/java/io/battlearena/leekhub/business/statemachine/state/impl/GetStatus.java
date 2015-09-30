@@ -26,20 +26,20 @@ public class GetStatus extends State {
 	public StatesMachine run() {
 		Status status = Status.valueOf(workflowService.getStatus(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe()));
 		switch (status) {
-		case ANNULE:
-		case NON:
+		case CANCELLED:
+		case CANTPLAY:
 			return StatesMachine.GET_STATUS;
-		case PERDU:
-		case GAGNE:
+		case DEFEAT:
+		case VICTORY:
 			if (ConfigurationSingleton.INSTANCE.getMode().equals(ConfigurationSingleton.TRAINING)) {
 				return StatesMachine.NEW_GAME;
 			} else {
 				return StatesMachine.NEXT_GAME;
 			}
-		case OUI:
+		case CANPLAY:
 			return StatesMachine.GET_BOARD;
 		default:
-			LOGGER.error("Status {} non traité", status.name());
+			LOGGER.error("Status {} non traitï¿½", status.name());
 			return null;
 		}
 	}

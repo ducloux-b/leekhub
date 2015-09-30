@@ -4,6 +4,8 @@ import io.battlearena.leekhub.model.entity.Board;
 
 public interface WorkflowService {
 	
+	public String ping();
+	
 	public String getIdEquipe(String nomEquipe, String password);
 	
 	public String newGame(String level, String idEquipe);

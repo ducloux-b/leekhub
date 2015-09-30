@@ -18,6 +18,8 @@ public class GetIdEquipe extends State {
 	@Override
 	public StatesMachine run() {
 		
+		workflowService.ping();
+		
 		while (StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdEquipe())) {
 			ConfigurationSingleton.INSTANCE.setIdEquipe(workflowService.getIdEquipe("nomequipe", "password"));
 		}

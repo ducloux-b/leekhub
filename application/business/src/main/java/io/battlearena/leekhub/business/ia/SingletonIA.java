@@ -10,7 +10,7 @@ public enum SingletonIA {
 	
 	private Board board;
 	private Action action;
-	private Integer level;
+	private Integer level = 1;
 	
 	public final Board getBoard() {
 		return board;

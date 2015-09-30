@@ -9,19 +9,13 @@ import io.battlearena.leekhub.business.ia.SingletonIA;
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
-import io.battlearena.leekhub.model.entity.Action;
 import io.battlearena.leekhub.model.entity.PlayStatus;
-import io.battlearena.leekhub.model.entity.Status;
 import io.battlearena.leekhub.service.PlayService;
-import io.battlearena.leekhub.service.WorkflowService;
 
 @Component
 public class Play extends State {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Play.class);
-
-	@Autowired
-	private WorkflowService workflowService;
 
 	@Autowired
 	private PlayService playService;
@@ -31,6 +25,7 @@ public class Play extends State {
 
 	@Override
 	public StatesMachine run() {
+		SingletonIA.INSTANCE.performIA();
 		PlayStatus status = playService.getPlayStatus(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe(), SingletonIA.INSTANCE.getAction());
 		
 		switch (status) {

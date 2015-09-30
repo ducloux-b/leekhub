@@ -4,7 +4,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.business.statemachine.state.impl.Perdu;
-import io.battlearena.leekhub.business.statemachine.state.impl.Play;
 
 public enum StatesMachine {
 	GET_ID_EQUIPE { 

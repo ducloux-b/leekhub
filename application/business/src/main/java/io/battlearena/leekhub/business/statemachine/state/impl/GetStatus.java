@@ -26,8 +26,10 @@ public class GetStatus extends State {
 	@Override
 	public StatesMachine run() {
 		Status status = Status.valueOf(workflowService.getStatus(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe()));
+		System.out.println(status);
+		System.out.println(ConfigurationSingleton.INSTANCE.getIdPartie());
+		System.out.println(ConfigurationSingleton.INSTANCE.getIdEquipe());
 		switch (status) {
-		case CANCELLED:
 		case CANTPLAY:
 			return StatesMachine.GET_STATUS;
 		case VICTORY:
@@ -35,6 +37,8 @@ public class GetStatus extends State {
 				SingletonIA.INSTANCE.setLevel(SingletonIA.INSTANCE.getLevel()+1);
 			}
 		case DEFEAT:
+		case CANCELLED:
+			ConfigurationSingleton.INSTANCE.setIdPartie(null);
 			if (ConfigurationSingleton.INSTANCE.getMode().equals(ConfigurationSingleton.TRAINING)) {
 				return StatesMachine.NEW_GAME;
 			} else {

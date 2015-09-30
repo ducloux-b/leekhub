@@ -21,9 +21,17 @@ public class NextGame extends State {
 	@Override
 	public StatesMachine run() {
 		System.out.println("Prochaine partie");
-		while(StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdPartie())) {
-			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.nextGame(ConfigurationSingleton.INSTANCE.getIdPartie()));
+		while(StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdPartie()) || ConfigurationSingleton.INSTANCE.getIdPartie().equals("NA")) {
+			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.nextGame(ConfigurationSingleton.INSTANCE.getIdEquipe()));
+			System.out.println("Id Partie: "+ ConfigurationSingleton.INSTANCE.getIdPartie());
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		System.out.println("Id Partie: "+ ConfigurationSingleton.INSTANCE.getIdPartie());
 		return StatesMachine.GET_STATUS;
 	}
 

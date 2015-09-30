@@ -4,7 +4,7 @@ public enum ConfigurationSingleton {
 	INSTANCE;
 
 	/** ID de notre equipe */
-	private String idEquipe;
+	private String idEquipe = "02c4de37-e0e7-45e7-ad6b-96b3c4b22750";
 	/** Mode entrainement */
 	public final static String TRAINING = "train";
 	/** Mode entrainement */

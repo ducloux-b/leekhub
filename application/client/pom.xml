@@ -79,7 +79,7 @@
 <!-- 					<wadlFile>src/main/wadl/application.wadl</wadlFile> -->
 <!-- 					<generationStyle>jaxrs20</generationStyle> -->
 <!-- 					<sourceDirectory>src/main/java</sourceDirectory> -->
-<!-- 					<packageName>io.battlearena.client</packageName> -->
+<!-- 					<packageName>io.battlearena.leekhub.client</packageName> -->
 <!-- 					<autopackaging>false</autopackaging> -->
 <!-- 				</configuration> -->
 <!-- 			</plugin> -->

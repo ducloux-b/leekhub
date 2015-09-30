@@ -1,5 +1,8 @@
 package io.battlearena.leekhub.business.statemachine;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.business.statemachine.state.impl.GetBoard;
 import io.battlearena.leekhub.business.statemachine.state.impl.GetIdEquipe;
@@ -55,11 +58,13 @@ public enum StatesMachine {
 	private static String idPartie;
 	private static StatesMachine currentStep;
 	
-	private State getIdEquipe = new GetIdEquipe();
-	private State newGame = new NewGame();
-	private State nextGame = new NextGame();
-	private State getStatus = new GetStatus();
-	private State getBoard = new GetBoard();
+	private ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] {"Spring-context.xml"});
+	
+	private State getIdEquipe = (State) appContext.getBean("getIdEquipe");
+	private State newGame = (State) appContext.getBean("newGame");
+	private State nextGame = (State) appContext.getBean("nextGame");
+	private State getStatus = (State) appContext.getBean("getStatus");
+	private State getBoard = (State) appContext.getBean("getBoard");
 	private State play = new Play();
 	private State perdu = new Perdu();
 	

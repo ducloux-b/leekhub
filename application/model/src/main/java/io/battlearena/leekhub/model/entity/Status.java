@@ -1,9 +1,9 @@
 package io.battlearena.leekhub.model.entity;
 
 public enum Status {
-	WIN,
-	LOOSE,
-	YES,
-	NO,
-	CANCELED;
+	GAGNE,
+	PERDU,
+	OUI,
+	NON,
+	ANNULE;
 }

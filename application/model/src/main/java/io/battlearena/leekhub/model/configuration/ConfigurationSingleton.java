@@ -2,13 +2,13 @@ package io.battlearena.leekhub.model.configuration;
 
 public enum ConfigurationSingleton {
 	INSTANCE;
-	
+
 	/** ID de notre equipe */
 	private String idEquipe;
 	/** Mode entrainement */
-	public final static String TRAINING = "train"; 
+	public final static String TRAINING = "train";
 	/** Mode entrainement */
-	public final static String BATTLE = "battle"; 
+	public final static String BATTLE = "battle";
 	/** Mode de jeu */
 	private String mode = TRAINING;
 	/** ID de la partie */
@@ -37,7 +37,5 @@ public enum ConfigurationSingleton {
 	public void setIdPartie(String idPartie) {
 		this.idPartie = idPartie;
 	}
-	
-	
 
 }

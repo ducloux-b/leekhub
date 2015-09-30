@@ -1,9 +1,9 @@
-package io.battlearena.leekhub.singleton;
+package io.battlearena.leekhub.tools.singleton;
 
 import javax.ws.rs.client.Client;
 
-import io.battlearena.client.BattlearenaIo_TestWs;
-import io.battlearena.client.BattlearenaIo_TestWs.Root;
+import io.battlearena.leekhub.tools.client.BattlearenaIo_TestWs;
+import io.battlearena.leekhub.tools.client.BattlearenaIo_TestWs.Root;
 
 public class RootSingleton {
 	

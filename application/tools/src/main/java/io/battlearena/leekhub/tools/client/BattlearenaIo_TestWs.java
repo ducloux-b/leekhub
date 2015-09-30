@@ -1,4 +1,4 @@
-package io.battlearena.client;
+package io.battlearena.leekhub.tools.client;
 
 import java.net.URI;
 import java.util.HashMap;

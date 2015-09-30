@@ -17,8 +17,9 @@ public class NewGame extends State {
 
 	@Override
 	public StatesMachine run() {
+		System.out.println("Nouvelle partie");
 		while(StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdPartie())) {
-			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.newGame("level", ConfigurationSingleton.INSTANCE.getIdEquipe()));
+			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.newGame("1", ConfigurationSingleton.INSTANCE.getIdEquipe()));
 		}
 		return StatesMachine.GET_STATUS;
 	}

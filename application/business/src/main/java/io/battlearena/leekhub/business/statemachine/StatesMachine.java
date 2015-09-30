@@ -59,7 +59,7 @@ public enum StatesMachine {
 	private State nextGame = (State) appContext.getBean("nextGame");
 	private State getStatus = (State) appContext.getBean("getStatus");
 	private State getBoard = (State) appContext.getBean("getBoard");
-	private State play = new Play();
+	private State play = (State) appContext.getBean("play");
 	private State perdu = new Perdu();
 	
 	public State getGetIdEquipe() {

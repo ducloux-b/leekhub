@@ -62,6 +62,8 @@ public class IP521913975_BattleWs {
      * 
      */
     private static void customizeClientConfiguration(ClientConfig cc) {
+    	System.setProperty("http.proxyHost", "ntes.proxy.corp.sopra");
+        System.setProperty("http.proxyPort", "8080");
     }
 
     /**

@@ -50,10 +50,6 @@ public enum SingletonIA {
 			me = board.getPlayer2();		
 		}
 		
-		if (playService.getLastMove(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe()).equals(Action.COVER) && enemy.isFocused() && enemy.getShield()!=0){
-			action =   Action.AIM;
-			return;
-		}else{
 		
 			if (me.getBullet()==0){
 				if (me.isFocused()){ //TODO nbCover<7
@@ -84,6 +80,5 @@ public enum SingletonIA {
 				
 			}
 		}
-	}
 
 }

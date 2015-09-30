@@ -26,7 +26,7 @@ public class GetStatus extends State {
 	@Override
 	public StatesMachine run() {
 		Status status = Status.valueOf(workflowService.getStatus(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe()));
-		System.out.println(status);
+		System.err.println(status);
 		System.out.println(ConfigurationSingleton.INSTANCE.getIdPartie());
 		System.out.println(ConfigurationSingleton.INSTANCE.getIdEquipe());
 		switch (status) {

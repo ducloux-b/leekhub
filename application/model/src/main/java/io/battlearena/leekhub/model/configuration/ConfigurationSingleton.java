@@ -10,7 +10,7 @@ public enum ConfigurationSingleton {
 	/** Mode entrainement */
 	public final static String BATTLE = "battle";
 	/** Mode de jeu */
-	private String mode = TRAINING;
+	private String mode = BATTLE;
 	/** ID de la partie */
 	private String idPartie;
 	/** user */

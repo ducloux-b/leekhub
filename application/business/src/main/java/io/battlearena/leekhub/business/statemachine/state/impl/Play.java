@@ -21,10 +21,11 @@ public class Play extends State {
 	public StatesMachine run() {
 		PlayStatus status = playService.getPlayStatus();
 		switch (status) {
-		case KO:
+		case FORBIDDEN:
+		case GAMEOVER:
 			return StatesMachine.LOOSE;
 		case OK:
-		case PTT:
+		case NOTYET:
 			return StatesMachine.GET_STATUS;
 		default:
 			LOGGER.error("Play Status {} inconnu", status.name());

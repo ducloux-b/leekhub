@@ -20,6 +20,7 @@ public class NextGame extends State {
 
 	@Override
 	public StatesMachine run() {
+		System.out.println("Prochaine partie");
 		while(StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdPartie())) {
 			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.nextGame(ConfigurationSingleton.INSTANCE.getIdPartie()));
 		}

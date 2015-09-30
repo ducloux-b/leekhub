@@ -1,14 +1,8 @@
 package io.battlearena.leekhub.business.statemachine;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import io.battlearena.leekhub.business.statemachine.state.State;
-import io.battlearena.leekhub.business.statemachine.state.impl.GetBoard;
-import io.battlearena.leekhub.business.statemachine.state.impl.GetIdEquipe;
-import io.battlearena.leekhub.business.statemachine.state.impl.GetStatus;
-import io.battlearena.leekhub.business.statemachine.state.impl.NewGame;
-import io.battlearena.leekhub.business.statemachine.state.impl.NextGame;
 import io.battlearena.leekhub.business.statemachine.state.impl.Perdu;
 import io.battlearena.leekhub.business.statemachine.state.impl.Play;
 

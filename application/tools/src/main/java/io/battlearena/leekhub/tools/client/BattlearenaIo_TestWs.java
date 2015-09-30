@@ -3,7 +3,6 @@ package io.battlearena.leekhub.tools.client;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.annotation.Generated;
 import javax.ws.rs.WebApplicationException;

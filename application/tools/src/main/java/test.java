@@ -2,10 +2,6 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
-
 import io.battlearena.leekhub.model.entity.Board;
 import io.battlearena.leekhub.model.exception.webscript.WebScriptException;
 import io.battlearena.leekhub.model.webscript.query.impl.GetBoard;
@@ -72,7 +68,6 @@ public class test
 					}
 				if(((double)i/(double)length)<=height-1)//on lie la case juste en dessous
 					{
-					int tmp= i/length;
 					ArrayList<NodeLeek> edge = new ArrayList<NodeLeek>();
 					edge.add(nodes.get(i-1));
 					edge.add(nodes.get(i+length-1));

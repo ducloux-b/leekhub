@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
-import io.battlearena.leekhub.service.NextGameService;
 import io.battlearena.leekhub.service.WorkflowService;
 
 @Component

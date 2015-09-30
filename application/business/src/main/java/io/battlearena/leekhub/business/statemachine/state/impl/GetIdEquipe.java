@@ -21,7 +21,7 @@ public class GetIdEquipe extends State {
 		workflowService.ping();
 		
 		while (StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdEquipe())) {
-			ConfigurationSingleton.INSTANCE.setIdEquipe(workflowService.getIdEquipe("nomequipe", "password"));
+			ConfigurationSingleton.INSTANCE.setIdEquipe(workflowService.getIdEquipe(ConfigurationSingleton.INSTANCE.getUser(), ConfigurationSingleton.INSTANCE.getPassword()));
 		}
 		if (ConfigurationSingleton.INSTANCE.getMode().equals(ConfigurationSingleton.TRAINING)) {
 			return StatesMachine.NEW_GAME;

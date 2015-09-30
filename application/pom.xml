@@ -9,7 +9,6 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>client</module>
 		<module>model</module>
 		<module>tools</module>
 		<module>business</module>

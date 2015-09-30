@@ -3,6 +3,7 @@ package io.battlearena.leekhub.business.statemachine.state.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.battlearena.leekhub.business.ia.SingletonIA;
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
@@ -19,7 +20,8 @@ public class GetBoard extends State {
 
 	@Override
 	public StatesMachine run() {
-		workflowService.getBoard(ConfigurationSingleton.INSTANCE.getIdPartie());
+		SingletonIA.INSTANCE.setBoard(workflowService.getBoard(ConfigurationSingleton.INSTANCE.getIdPartie()));
+		
 		return StatesMachine.PLAY;
 	}
 

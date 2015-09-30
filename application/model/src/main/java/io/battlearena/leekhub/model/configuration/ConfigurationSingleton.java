@@ -13,6 +13,10 @@ public enum ConfigurationSingleton {
 	private String mode = TRAINING;
 	/** ID de la partie */
 	private String idPartie;
+	/** user */
+	private String user = "LeekHub";
+	/** mdp */
+	private String password = "LH56FTjlj";
 
 	public final String getIdEquipe() {
 		return idEquipe;
@@ -36,6 +40,22 @@ public enum ConfigurationSingleton {
 
 	public void setIdPartie(String idPartie) {
 		this.idPartie = idPartie;
+	}
+
+	public final String getUser() {
+		return user;
+	}
+
+	public final void setUser(String user) {
+		this.user = user;
+	}
+
+	public final String getPassword() {
+		return password;
+	}
+
+	public final void setPassword(String password) {
+		this.password = password;
 	}
 
 }

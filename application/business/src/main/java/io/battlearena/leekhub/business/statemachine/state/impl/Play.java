@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.battlearena.leekhub.business.ia.SingletonIA;
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
@@ -30,7 +31,7 @@ public class Play extends State {
 
 	@Override
 	public StatesMachine run() {
-		PlayStatus status = playService.getPlayStatus(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe(), Action.RELOAD);
+		PlayStatus status = playService.getPlayStatus(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe(), SingletonIA.INSTANCE.getAction());
 		
 		switch (status) {
 		case FORBIDDEN:

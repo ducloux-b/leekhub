@@ -6,6 +6,7 @@ public class Run {
 	public static void main(String[] args) {
 		StatesMachine currentState = StatesMachine.GET_ID_EQUIPE;
 		while(null != currentState) {
+			System.out.println(currentState.name());
 			currentState = currentState.process();
 		}
 	}

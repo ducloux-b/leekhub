@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.battlearena.leekhub.business.ia.SingletonIA;
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
@@ -19,7 +20,7 @@ public class NewGame extends State {
 	public StatesMachine run() {
 		System.out.println("Nouvelle partie");
 		while(StringUtils.isEmpty(ConfigurationSingleton.INSTANCE.getIdPartie())) {
-			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.newGame("1", ConfigurationSingleton.INSTANCE.getIdEquipe()));
+			ConfigurationSingleton.INSTANCE.setIdPartie(workflowService.newGame(SingletonIA.INSTANCE.getLevel().toString(), ConfigurationSingleton.INSTANCE.getIdEquipe()));
 		}
 		return StatesMachine.GET_STATUS;
 	}

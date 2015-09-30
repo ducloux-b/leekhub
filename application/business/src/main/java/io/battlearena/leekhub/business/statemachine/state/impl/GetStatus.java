@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.battlearena.leekhub.business.ia.SingletonIA;
 import io.battlearena.leekhub.business.statemachine.StatesMachine;
 import io.battlearena.leekhub.business.statemachine.state.State;
 import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
@@ -29,8 +30,11 @@ public class GetStatus extends State {
 		case CANCELLED:
 		case CANTPLAY:
 			return StatesMachine.GET_STATUS;
-		case DEFEAT:
 		case VICTORY:
+			if (ConfigurationSingleton.INSTANCE.getMode().equals(ConfigurationSingleton.TRAINING)) {
+				SingletonIA.INSTANCE.setLevel(SingletonIA.INSTANCE.getLevel()+1);
+			}
+		case DEFEAT:
 			if (ConfigurationSingleton.INSTANCE.getMode().equals(ConfigurationSingleton.TRAINING)) {
 				return StatesMachine.NEW_GAME;
 			} else {

@@ -10,6 +10,8 @@ public enum SingletonIA {
 	
 	private Board board;
 	private Action action;
+	private Integer level;
+	
 	public final Board getBoard() {
 		return board;
 	}
@@ -23,6 +25,12 @@ public enum SingletonIA {
 		this.action = action;
 	}
 	
+	public final Integer getLevel() {
+		return level;
+	}
+	public final void setLevel(Integer level) {
+		this.level = level;
+	}
 	public void performIA() {
 		Player me;
 		Player enemy;

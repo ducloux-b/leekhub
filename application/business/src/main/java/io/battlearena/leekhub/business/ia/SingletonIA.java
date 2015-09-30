@@ -4,13 +4,21 @@ import io.battlearena.leekhub.model.configuration.ConfigurationSingleton;
 import io.battlearena.leekhub.model.entity.Action;
 import io.battlearena.leekhub.model.entity.Board;
 import io.battlearena.leekhub.model.entity.Player;
+import io.battlearena.leekhub.service.PlayService;
 
 public enum SingletonIA {
 	INSTANCE;
 	
+	private PlayService playService;
+	public PlayService getPlayService() {
+		return playService;
+	}
+	public void setPlayService(PlayService playService) {
+		this.playService = playService;
+	}
 	private Board board;
 	private Action action;
-	private Integer level = 1;
+	private Integer level = 6;
 	
 	public final Board getBoard() {
 		return board;
@@ -42,33 +50,39 @@ public enum SingletonIA {
 			me = board.getPlayer2();		
 		}
 		
-		if (me.getBullet()==0){
-			if (me.isFocused()){ //TODO nbCover<7
-				action =  Action.COVER;
-				return;
-			}else{
-				action =   Action.RELOAD;
-				return;
-			}
+		if (playService.getLastMove(ConfigurationSingleton.INSTANCE.getIdPartie(), ConfigurationSingleton.INSTANCE.getIdEquipe()).equals(Action.COVER) && enemy.isFocused() && enemy.getShield()!=0){
+			action =   Action.AIM;
+			return;
 		}else{
-			if (me.isFocused()){
-				action =   Action.SHOOT;
-				return;
-			}else{
-				if(enemy.isFocused() || enemy.getHealth()<=2){
-					action =   Action.SHOOT;
+		
+			if (me.getBullet()==0){
+				if (me.isFocused()){ //TODO nbCover<7
+					action =  Action.COVER;
 					return;
 				}else{
-					if(me.getBullet()<2){
-						action =   Action.RELOAD;
+					action =   Action.RELOAD;
+					return;
+				}
+			}else{
+				if (me.isFocused()){
+					action =  Action.COVER;
+					return;
+				}else{
+					if(enemy.isFocused() || enemy.getHealth()<=2){
+						action =  Action.SHOOT;
 						return;
 					}else{
-						action =   Action.AIM;
-						return;
+						if(me.getBullet()<2){
+							action =   Action.RELOAD;
+							return;
+						}else{
+							action =   Action.AIM;
+							return;
+						}
 					}
 				}
+				
 			}
-			
 		}
 	}
 

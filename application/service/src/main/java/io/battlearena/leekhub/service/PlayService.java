@@ -1,5 +1,6 @@
 package io.battlearena.leekhub.service;
 
+import io.battlearena.leekhub.model.entity.Action;
 import io.battlearena.leekhub.model.entity.PlayStatus;
 
 /**
@@ -8,5 +9,5 @@ import io.battlearena.leekhub.model.entity.PlayStatus;
  *
  */
 public interface PlayService {
-	PlayStatus getPlayStatus();
+	PlayStatus getPlayStatus(Action move);
 }
